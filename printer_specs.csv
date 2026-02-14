@@ -1,0 +1,51 @@
+Brand,Model,PrintTech,PrintTech_Score,PrintSpeed,PaperCapacity,Duplex,Network,MonthlyDuty,TonerYield,Warranty,Price,Compliant
+HP,LaserJet Pro M404dn,Laser,1.0,38,350,Yes,Ethernet,80000,3000,3,1899,Yes
+HP,LaserJet Pro M203dw,Laser,1.0,28,260,Yes,WiFi+Ethernet,30000,1500,1,1299,Yes
+HP,LaserJet Pro M428fdw,Laser,1.0,40,350,Yes,WiFi+Ethernet,80000,3100,3,2599,Yes
+HP,LaserJet Pro M15w,Laser,1.0,19,150,No,WiFi,8000,1000,1,599,No
+HP,LaserJet MFP M234dwe,Laser,1.0,29,225,Yes,WiFi+Ethernet,20000,1500,1,999,Yes
+HP,LaserJet MFP M442dn,Laser,1.0,42,350,Yes,Ethernet,80000,3200,3,2199,Yes
+HP,Smart Tank 670,Inkjet,0.8,11,100,No,WiFi,8000,8000,2,899,No
+HP,Neverstop 1000w,Laser,1.0,20,150,No,WiFi,20000,2500,1,799,No
+HP,OfficeJet Pro 9720,Inkjet,0.9,24,250,Yes,WiFi+Ethernet,50000,8000,2,1999,Yes
+HP,OfficeJet Pro 8720,Inkjet,0.9,24,225,Yes,WiFi+Ethernet,45000,7500,2,1799,Yes
+Canon,imageCLASS LBP226dw,Laser,1.0,38,350,Yes,WiFi+Ethernet,80000,3100,3,1999,Yes
+Canon,imageCLASS LBP6030w,Laser,1.0,18,150,No,WiFi,5000,1600,1,699,No
+Canon,imageCLASS MF445dw,Laser,1.0,40,350,Yes,WiFi+Ethernet,80000,3200,3,2399,Yes
+Canon,imageCLASS MF269dw,Laser,1.0,30,251,Yes,WiFi+Ethernet,30000,1700,3,1599,Yes
+Canon,imageCLASS MF656Cdw,Laser,1.0,21,250,Yes,WiFi+Ethernet,50000,2400,3,2999,Yes
+Canon,PIXMA G3270,Inkjet,0.8,13,100,No,WiFi,8000,7000,2,799,No
+Canon,PIXMA G4270,Inkjet,0.8,13,100,No,WiFi,12000,7000,2,999,No
+Canon,MAXIFY GX6070,Inkjet,0.9,24,350,Yes,WiFi+Ethernet,60000,14000,3,2499,Yes
+Canon,MAXIFY GX7070,Inkjet,0.9,27,350,Yes,WiFi+Ethernet,80000,18000,3,2899,Yes
+Epson,EcoTank L3250,Inkjet,0.8,33,100,No,WiFi,5000,7500,2,899,No
+Epson,EcoTank L3280,Inkjet,0.8,33,100,No,WiFi,8000,7500,2,999,No
+Epson,EcoTank L5290,Inkjet,0.8,15,250,Yes,WiFi+Ethernet,15000,7500,2,1499,Yes
+Epson,WorkForce Pro WF-C5790,Inkjet,0.9,34,330,Yes,WiFi+Ethernet,75000,10000,3,2499,Yes
+Epson,WorkForce Pro WF-C5890,Inkjet,0.9,34,330,Yes,WiFi+Ethernet,75000,10000,3,2699,Yes
+Epson,WorkForce Pro WF-M5899,Inkjet,0.9,25,330,Yes,WiFi+Ethernet,100000,50000,3,2999,Yes
+Epson,WorkForce Pro WF-7310,Inkjet,0.9,18,250,Yes,WiFi+Ethernet,30000,4500,2,1399,Yes
+Epson,EcoTank M2170,Inkjet,0.8,39,251,Yes,WiFi+Ethernet,15000,6000,2,1299,Yes
+Epson,EcoTank M3180,Inkjet,0.8,39,330,Yes,WiFi+Ethernet,25000,6000,2,1699,Yes
+Brother,HL-L5100DN,Laser,1.0,42,300,Yes,Ethernet,60000,3000,3,1799,Yes
+Brother,HL-L2460DN,Laser,1.0,36,250,Yes,Ethernet,30000,3000,2,1199,Yes
+Brother,HL-L2375DW,Laser,1.0,34,250,Yes,WiFi+Ethernet,30000,2600,2,1299,Yes
+Brother,DCP-L2550DW,Laser,1.0,36,250,Yes,WiFi+Ethernet,30000,2600,2,1599,Yes
+Brother,MFC-L2750DW,Laser,1.0,36,250,Yes,WiFi+Ethernet,30000,2600,2,1799,Yes
+Brother,MFC-L5900DW,Laser,1.0,42,300,Yes,WiFi+Ethernet,60000,8000,3,2299,Yes
+Brother,MFC-L6900DW,Laser,1.0,50,520,Yes,WiFi+Ethernet,80000,12000,3,2999,Yes
+Brother,DCP-T420W,Inkjet,0.8,12,150,No,WiFi,12000,7500,1,599,No
+Brother,MFC-T4500DW,Inkjet,0.8,17,150,Yes,WiFi,20000,7500,2,1099,Yes
+Xerox,B310,Laser,1.0,40,350,Yes,WiFi+Ethernet,65000,3200,3,1899,Yes
+Xerox,B230,Laser,1.0,34,250,Yes,WiFi,50000,1500,1,1399,Yes
+Xerox,B235,Laser,1.0,36,251,Yes,WiFi+Ethernet,50000,3000,3,1699,Yes
+Xerox,C315,Laser,1.0,35,251,Yes,WiFi+Ethernet,50000,2400,3,2499,Yes
+Xerox,C325,Laser,1.0,35,251,Yes,WiFi+Ethernet,60000,2400,3,2699,Yes
+Ricoh,SP 330DN,Laser,1.0,32,300,Yes,Ethernet,60000,3500,3,1999,Yes
+Ricoh,SP 230DNw,Laser,1.0,30,251,Yes,WiFi+Ethernet,30000,2600,2,1499,Yes
+Samsung,Xpress M2835DW,Laser,1.0,29,251,Yes,WiFi+Ethernet,30000,2000,2,1299,Yes
+Samsung,SL-M3870FD,Laser,1.0,40,350,Yes,Ethernet,80000,10000,3,2499,Yes
+Pantum,P3300DW,Laser,1.0,33,250,Yes,WiFi+Ethernet,60000,6000,2,1399,Yes
+Pantum,M6609N,Laser,1.0,22,150,No,Ethernet,15000,1600,1,899,No
+Fuji Xerox,DocuPrint M285z,Laser,1.0,28,251,Yes,WiFi+Ethernet,30000,3000,2,1799,Yes
+OKI,MC363dn,Laser,1.0,26,300,Yes,Ethernet,30000,2500,3,2199,Yes

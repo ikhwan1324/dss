@@ -1,0 +1,61 @@
+Brand,Model,Processor,Processor_Score,RAM,Storage,ScreenSize,BatteryLife,Weight,Warranty,OS,Price,Compliant
+Dell,Latitude 3440,Intel i5-1335U,0.9,8,256,14,8,1.54,3,Windows 11 Pro,2599,Yes
+Dell,Latitude 3540,Intel i5-1335U,0.9,8,512,15.6,9,1.79,3,Windows 11 Pro,2899,Yes
+Dell,Latitude 5440,Intel i7-1355U,1.0,16,512,14,10,1.42,3,Windows 11 Pro,4299,Yes
+Dell,Inspiron 15 3535,AMD Ryzen 5 7530U,0.9,8,512,15.6,8,1.83,1,Windows 11 Home,2499,Yes
+Dell,Inspiron 14 Plus,Intel i7-1355U,1.0,16,512,14,11,1.49,2,Windows 11 Home,3699,Yes
+Dell,Vostro 3520,Intel i5-1235U,0.9,8,512,15.6,8,1.66,3,Windows 11 Pro,2799,Yes
+Dell,Pro 16,Intel i7-1355U,1.0,16,512,16,10,1.78,3,Windows 11 Pro,4389,Yes
+Dell,14 Laptop,Intel i5-1235U,0.9,8,256,14,7,1.61,2,Windows 11 Home,2699,Yes
+HP,ProBook 440 G10,Intel i5-1335U,0.9,8,256,14,9,1.38,3,Windows 11 Pro,2949,Yes
+HP,ProBook 450 G10,Intel i5-1335U,0.9,8,512,15.6,9,1.74,3,Windows 11 Pro,3199,Yes
+HP,EliteBook 840 G10,Intel i7-1355U,1.0,16,512,14,12,1.36,3,Windows 11 Pro,4999,Yes
+HP,EliteBook 1040 G11,Intel i7-1365U,1.0,16,1024,14,14,1.19,3,Windows 11 Pro,7599,Yes
+HP,Laptop 15,Intel i5-1235U,0.9,8,512,15.6,7,1.69,1,Windows 11 Home,2399,Yes
+HP,Laptop 14,Intel i3-1215U,0.8,8,256,14,6,1.46,1,Windows 11 Home,1999,Yes
+HP,Pavilion 15,Intel i7-1355U,1.0,16,512,15.6,8,1.75,2,Windows 11 Home,3499,Yes
+HP,Envy x360 14,AMD Ryzen 5 7530U,0.9,16,512,14,10,1.39,2,Windows 11 Home,3999,Yes
+HP,Victus 15,Intel i5-12450H,0.9,8,512,15.6,6,2.29,2,Windows 11 Home,3299,Yes
+HP,OmniBook X,Snapdragon X Elite,1.0,16,512,14,20,1.34,2,Windows 11 Home,4899,Yes
+Lenovo,ThinkPad E14 Gen 5,Intel i5-1335U,0.9,8,512,14,9,1.41,3,Windows 11 Pro,3199,Yes
+Lenovo,ThinkPad E15 Gen 5,Intel i5-1335U,0.9,8,512,15.6,8,1.7,3,Windows 11 Pro,3299,Yes
+Lenovo,ThinkPad E14 Gen 7,AMD Ryzen 5 7535HS,0.9,16,512,14,10,1.39,3,Windows 11 Pro,4000,Yes
+Lenovo,ThinkPad L14 Gen 5,Intel i7-1355U,1.0,16,512,14,11,1.38,3,Windows 11 Pro,4599,Yes
+Lenovo,IdeaPad Slim 3,Intel i5-1235U,0.9,8,512,15.6,7,1.63,2,Windows 11 Home,2499,Yes
+Lenovo,IdeaPad Slim 5,AMD Ryzen 5 7530U,0.9,16,512,14,10,1.46,2,Windows 11 Home,2999,Yes
+Lenovo,IdeaPad 3 15,AMD Ryzen 5 7520U,0.8,8,512,15.6,7,1.63,1,Windows 11 Home,2199,Yes
+Lenovo,ThinkBook 14 Gen 9,Intel i5-1335U,0.9,8,512,14,9,1.4,3,Windows 11 Pro,3797,Yes
+Lenovo,ThinkBook 16 Gen 9,Intel i7-1355U,1.0,16,512,16,10,1.7,3,Windows 11 Pro,4732,Yes
+Lenovo,Yoga Slim 7i,Intel i7-1355U,1.0,16,512,14,12,1.35,2,Windows 11 Home,4803,Yes
+Lenovo,LOQ Essential,Intel i5-12450H,0.9,8,512,15.6,6,2.38,2,Windows 11 Home,2999,Yes
+Asus,VivoBook 15 OLED,Intel i5-1235U,0.9,8,512,15.6,8,1.7,2,Windows 11 Home,2699,Yes
+Asus,VivoBook 14,AMD Ryzen 5 7530U,0.9,16,512,14,9,1.4,2,Windows 11 Home,2599,Yes
+Asus,VivoBook Go 15,Intel i3-1215U,0.8,8,256,15.6,6,1.63,1,Windows 11 Home,1899,Yes
+Asus,VivoBook Pro 15,Intel i7-12650H,1.0,16,512,15.6,7,1.8,2,Windows 11 Home,3999,Yes
+Asus,ZenBook 14 OLED,Intel i5-1340P,0.9,16,512,14,12,1.39,2,Windows 11 Home,4299,Yes
+Asus,ZenBook 14,Intel i7-1355U,1.0,16,512,14,13,1.39,2,Windows 11 Home,4599,Yes
+Asus,ExpertBook B1,Intel i5-1235U,0.9,8,512,14,8,1.45,3,Windows 11 Pro,2999,Yes
+Asus,ExpertBook PM3,Intel i7-1355U,1.0,16,512,14,10,1.29,3,Windows 11 Pro,5199,Yes
+Asus,TUF Gaming A15,AMD Ryzen 5 7535HS,0.9,8,512,15.6,6,2.2,2,Windows 11 Home,3299,Yes
+Acer,Aspire 5,Intel i5-1235U,0.9,8,512,15.6,8,1.7,1,Windows 11 Home,2499,Yes
+Acer,Aspire 3,AMD Ryzen 5 7520U,0.8,8,512,15.6,7,1.78,1,Windows 11 Home,2199,Yes
+Acer,Aspire Lite 14,Intel i5-1235U,0.9,8,512,14,7,1.46,2,Windows 11 Home,2399,Yes
+Acer,Aspire Lite 15,AMD Ryzen 5 7520U,0.8,8,512,15.6,7,1.78,1,Windows 11 Home,2299,Yes
+Acer,Swift 3,Intel i5-1240P,0.9,16,512,14,10,1.25,2,Windows 11 Home,3499,Yes
+Acer,Swift 14 AI,Intel Core Ultra 5,1.0,16,512,14,15,1.32,2,Windows 11 Home,4248,Yes
+Acer,TravelMate P2,Intel i5-1335U,0.9,8,256,15.6,9,1.75,3,Windows 11 Pro,2899,Yes
+Acer,TravelMate P4,Intel i7-1355U,1.0,16,512,14,11,1.19,3,Windows 11 Pro,4299,Yes
+Acer,Nitro 5,Intel i5-12450H,0.9,8,512,15.6,5,2.5,2,Windows 11 Home,3199,Yes
+MSI,Modern 14,Intel i5-1235U,0.9,8,512,14,8,1.4,2,Windows 11 Home,2699,Yes
+MSI,Modern 15,Intel i5-1235U,0.9,8,512,15.6,7,1.75,2,Windows 11 Home,2799,Yes
+MSI,Prestige 14,Intel i7-1355U,1.0,16,1024,14,10,1.29,2,Windows 11 Home,4699,Yes
+MSI,GF63 Thin,Intel i5-12450H,0.9,8,512,15.6,5,1.86,2,Windows 11 Home,2999,Yes
+Huawei,MateBook D 14,Intel i5-1240P,0.9,16,512,14,11,1.38,2,Windows 11 Home,3199,Yes
+Huawei,MateBook D 15,Intel i5-1235U,0.9,8,512,15.6,8,1.56,2,Windows 11 Home,2899,Yes
+Xiaomi,RedmiBook 15,Intel i5-1235U,0.9,8,512,15.6,8,1.8,1,Windows 11 Home,2399,Yes
+Xiaomi,RedmiBook Pro 14,Intel i5-12450H,0.9,16,512,14,9,1.4,2,Windows 11 Home,3199,Yes
+Apple,MacBook Air M2,Apple M2,1.0,8,256,13.6,18,1.24,1,macOS,4499,No
+Apple,MacBook Air M3,Apple M3,1.0,8,256,13.6,18,1.24,1,macOS,4999,No
+Apple,MacBook Pro 14 M4,Apple M4,1.0,16,512,14,22,1.55,1,macOS,6999,No
+Microsoft,Surface Laptop 5,Intel i5-1245U,0.9,8,256,13.5,17,1.27,1,Windows 11 Home,4299,No
+Microsoft,Surface Laptop Go 3,Intel i5-1235U,0.9,8,256,12.4,13,1.13,1,Windows 11 Home,3299,Yes
