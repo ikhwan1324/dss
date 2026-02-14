@@ -1,0 +1,51 @@
+Brand,Model,ScreenSize,Resolution,DisplayType,Processor,OS,OS_Score,WiFi,HDMI,HDMI_Version,AudioW,HDR10,Bluetooth,Weight,MEPS_Rating,Accessories_Count,FloorStand_Included,AVR_Included,AVR_Capacity,Warranty_Years,BasePrice,Zone1_Premium,Zone2_Premium,Compliant
+Samsung,QN65Q80F,65,4K,QLED,Quad Core,Tizen,0.9,WiFi 6,4,2.1,60,Yes,Yes,21.5,5,8,Yes,Yes,1200,3,6999,5.0,5.0,Yes
+Samsung,QN65Q90F,65,4K,Neo QLED,Quad Core,Tizen,0.9,WiFi 6,4,2.1,70,Yes,Yes,22.0,5,9,Yes,Yes,1500,3,8999,5.0,5.0,Yes
+Samsung,UA65DU7000,65,4K,LED,Quad Core,Tizen,0.9,WiFi 5,3,2.1,20,Yes,Yes,23.5,3,7,Yes,Yes,800,3,2999,5.0,5.0,Yes
+Samsung,UA65DU8000,65,4K,LED,Quad Core,Tizen,0.9,WiFi 6,4,2.1,30,Yes,Yes,22.8,4,7,Yes,Yes,1000,3,3799,5.0,5.0,Yes
+Samsung,QN65Q70F,65,4K,QLED,Quad Core,Tizen,0.9,WiFi 6,4,2.1,40,Yes,Yes,22.2,4,8,Yes,Yes,1000,3,5499,5.0,5.0,Yes
+Samsung,UA65CU8000,65,4K,LED,Quad Core,Tizen,0.9,WiFi 5,3,2.1,20,Yes,Yes,23.1,3,7,Yes,Yes,800,3,3299,5.0,5.0,Yes
+Samsung,QA65S95F,65,4K,OLED,Quad Core,Tizen,0.9,WiFi 6,4,2.1,60,Yes,Yes,21.0,5,10,Yes,Yes,1500,3,10999,5.0,5.0,Yes
+Samsung,QA65S90F,65,4K,OLED,Quad Core,Tizen,0.9,WiFi 6,4,2.1,60,Yes,Yes,21.3,5,9,Yes,Yes,1500,3,9999,5.0,5.0,Yes
+LG,65UR7550,65,4K,LED,Quad Core,webOS,0.9,WiFi 5,3,2.1,20,Yes,Yes,24.0,3,7,Yes,Yes,800,2,2899,5.0,5.0,Yes
+LG,65UQ7500,65,4K,LED,Quad Core,webOS,0.9,WiFi 5,3,2.0,20,Yes,Yes,24.5,3,7,Yes,Yes,800,2,2799,5.0,5.0,Yes
+LG,65QNED80,65,4K,QNED,Quad Core,webOS,0.9,WiFi 6,4,2.1,40,Yes,Yes,23.0,4,8,Yes,Yes,1000,3,4999,5.0,5.0,Yes
+LG,65C4 OLED,65,4K,OLED,Quad Core,webOS,0.9,WiFi 6,4,2.1,40,Yes,Yes,21.5,5,9,Yes,Yes,1200,3,7999,5.0,5.0,Yes
+LG,65C5 OLED,65,4K,OLED,Quad Core,webOS,0.9,WiFi 6,4,2.1,40,Yes,Yes,21.8,5,9,Yes,Yes,1200,3,8499,5.0,5.0,Yes
+LG,65G4 OLED,65,4K,OLED,Quad Core,webOS,0.9,WiFi 6,4,2.1,60,Yes,Yes,20.5,5,10,Yes,Yes,1500,3,11999,5.0,5.0,Yes
+LG,65UP8000,65,4K,LED,Quad Core,webOS,0.9,WiFi 5,3,2.1,20,Yes,Yes,24.2,3,7,Yes,Yes,800,2,3199,5.0,5.0,Yes
+LG,65UA7350,65,4K,LED,Quad Core,webOS,0.9,WiFi 5,3,2.1,20,Yes,Yes,23.8,3,7,Yes,Yes,800,3,2699,5.0,5.0,Yes
+Sony,XR65X90L,65,4K,LED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,30,Yes,Yes,23.8,4,7,Yes,Yes,1000,3,5999,5.0,5.0,Yes
+Sony,XR65X95L,65,4K,LED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,23.5,4,8,Yes,Yes,1200,3,7999,5.0,5.0,Yes
+Sony,KD65X75K,65,4K,LED,Quad Core,Google TV,1.0,WiFi 5,3,2.1,20,Yes,Yes,24.2,3,7,Yes,Yes,800,2,3499,5.0,5.0,Yes
+Sony,KD65X80K,65,4K,LED,Quad Core,Google TV,1.0,WiFi 5,3,2.1,20,Yes,Yes,24.0,3,7,Yes,Yes,800,3,3899,5.0,5.0,Yes
+Sony,XR65A80L,65,4K,OLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,50,Yes,Yes,21.2,5,9,Yes,Yes,1200,3,8999,5.0,5.0,Yes
+Sony,XR65A95L,65,4K,OLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,60,Yes,Yes,21.0,5,10,Yes,Yes,1500,3,12999,5.0,5.0,Yes
+Sony,BRAVIA8,65,4K,OLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,50,Yes,Yes,21.5,5,9,Yes,Yes,1200,3,9999,5.0,5.0,Yes
+TCL,65C735,65,4K,QLED,Quad Core,Google TV,1.0,WiFi 5,3,2.1,30,Yes,Yes,23.0,3,7,Yes,Yes,800,3,2799,5.0,5.0,Yes
+TCL,65C745,65,4K,QLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,22.5,4,8,Yes,Yes,1000,3,3499,5.0,5.0,Yes
+TCL,65C805,65,4K,Mini LED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,50,Yes,Yes,22.8,4,8,Yes,Yes,1200,3,4299,5.0,5.0,Yes
+TCL,65P615,65,4K,LED,Dual Core,Android TV,1.0,WiFi 5,3,2.0,20,Yes,Yes,24.8,3,5,No,No,0,1,2299,5.0,5.0,No
+TCL,65QM7K,65,4K,QLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,50,Yes,Yes,22.0,4,8,Yes,Yes,1200,3,4799,5.0,5.0,Yes
+TCL,65QM8K,65,4K,Mini LED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,60,Yes,Yes,21.8,5,9,Yes,Yes,1500,3,5999,5.0,5.0,Yes
+TCL,65C655,65,4K,QLED,Quad Core,Google TV,1.0,WiFi 5,3,2.1,30,Yes,Yes,23.2,3,7,Yes,Yes,800,3,2999,5.0,5.0,Yes
+Hisense,65U7H,65,4K,QLED,Quad Core,VIDAA,0.8,WiFi 5,4,2.1,30,Yes,Yes,22.8,4,7,Yes,Yes,900,3,2599,5.0,5.0,Yes
+Hisense,65U8H,65,4K,ULED,Quad Core,VIDAA,0.8,WiFi 6,4,2.1,40,Yes,Yes,22.5,4,8,Yes,Yes,1000,3,3299,5.0,5.0,Yes
+Hisense,65A6H,65,4K,LED,Dual Core,VIDAA,0.8,WiFi 5,3,2.0,20,Yes,Yes,24.0,3,6,No,Yes,700,2,1999,5.0,5.0,No
+Hisense,65A7H,65,4K,LED,Quad Core,VIDAA,0.8,WiFi 5,3,2.1,20,Yes,Yes,23.5,3,7,Yes,Yes,800,3,2399,5.0,5.0,Yes
+Hisense,65E7N,65,4K,QLED,Quad Core,VIDAA,0.8,WiFi 5,4,2.1,30,Yes,Yes,23.0,4,7,Yes,Yes,900,3,2899,5.0,5.0,Yes
+Hisense,65U8QG,65,4K,Mini LED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,50,Yes,Yes,22.2,4,8,Yes,Yes,1200,3,3999,5.0,5.0,Yes
+Xiaomi,P1E 65,65,4K,LED,Quad Core,Android TV,1.0,WiFi 5,3,2.1,30,Yes,Yes,23.8,3,7,Yes,Yes,800,2,2399,5.0,5.0,Yes
+Xiaomi,Q2 65,65,4K,QLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,22.5,4,8,Yes,Yes,1000,3,2999,5.0,5.0,Yes
+Xiaomi,A Pro 65,65,4K,QLED,Quad Core,Google TV,1.0,WiFi 6,4,2.1,30,Yes,Yes,23.0,4,7,Yes,Yes,900,3,2699,5.0,5.0,Yes
+Sharp,4T-C65EJ1X,65,4K,LED,Quad Core,Android TV,0.9,WiFi 5,3,2.1,20,Yes,Yes,24.3,3,7,Yes,Yes,800,2,2599,5.0,5.0,Yes
+Sharp,8T-C65DX1X,65,4K,LED,Quad Core,Android TV,0.9,WiFi 5,3,2.1,30,Yes,Yes,23.6,3,7,Yes,Yes,800,3,2899,5.0,5.0,Yes
+Panasonic,TH-65LX800M,65,4K,LED,Quad Core,Android TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,23.0,4,8,Yes,Yes,1000,3,4499,5.0,5.0,Yes
+Panasonic,TH-65MX800M,65,4K,LED,Quad Core,Android TV,1.0,WiFi 6,4,2.1,50,Yes,Yes,22.8,4,8,Yes,Yes,1200,3,4999,5.0,5.0,Yes
+Toshiba,65M550LP,65,4K,LED,Quad Core,VIDAA,0.8,WiFi 5,3,2.1,20,Yes,Yes,24.1,3,7,Yes,Yes,800,2,2299,5.0,5.0,Yes
+Toshiba,65U7950EV,65,4K,QLED,Quad Core,Android TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,23.2,4,8,Yes,Yes,1000,3,3699,5.0,5.0,Yes
+Realme,TechLife Q,65,4K,QLED,Quad Core,Android TV,1.0,WiFi 5,3,2.1,30,Yes,Yes,23.5,3,7,Yes,Yes,800,2,2199,5.0,5.0,Yes
+PRISM+,Q65 Pro,65,4K,QLED,Quad Core,Android TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,22.8,4,8,Yes,Yes,1000,3,2799,5.0,5.0,Yes
+Philips,65PUS8808,65,4K,LED,Quad Core,Android TV,1.0,WiFi 6,4,2.1,40,Yes,Yes,23.4,4,8,Yes,Yes,1000,3,4299,5.0,5.0,Yes
+Skyworth,65SUE9500,65,4K,LED,Quad Core,Android TV,1.0,WiFi 5,3,2.1,30,Yes,Yes,23.7,3,7,Yes,Yes,800,2,2499,5.0,5.0,Yes
+Devant,65UHD200,65,4K,LED,Dual Core,Android TV,0.9,WiFi 5,3,2.0,20,No,Yes,24.6,3,6,No,Yes,700,2,2099,5.0,5.0,No
