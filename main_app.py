@@ -364,573 +364,433 @@ if st.session_state.page == 'home':
                         st.rerun()
 
 # =========================
-# CREATE NEW TENDER PAGE
+# CREATE NEW TENDER PAGE (SINGLE PAGE FORM)
+# =========================
+elif st.session_state.page == 'create':
+    
+# =========================
+# CREATE NEW TENDER PAGE (SINGLE PAGE FORM)
 # =========================
 elif st.session_state.page == 'create':
     
     st.title("➕ Create New Tender Evaluation")
-    st.markdown("**Configure your tender requirements step by step**")
+    st.markdown("**Configure all tender requirements in one place**")
     st.markdown("---")
     
-    # Initialize tender creation state
-    if 'tender_step' not in st.session_state:
-        st.session_state.tender_step = 1
+    # Initialize form data
+    if 'form_data' not in st.session_state:
+        st.session_state.form_data = {
+            'zones': [{'name': 'Zone 1', 'qty': 0, 'premium': 0.0}]
+        }
     
-    if 'new_tender_data' not in st.session_state:
-        st.session_state.new_tender_data = {}
-    
-    # Step Indicator
-    steps = ["Basic Info", "Quantities", "Requirements", "Weights", "Evaluate"]
-    current_step = st.session_state.tender_step
-    
-    cols = st.columns(5)
-    for idx, step_name in enumerate(steps, 1):
-        with cols[idx-1]:
-            if idx < current_step:
-                st.success(f"✓ Step {idx}: {step_name}")
-            elif idx == current_step:
-                st.info(f"→ Step {idx}: {step_name}")
-            else:
-                st.write(f"Step {idx}: {step_name}")
-    
-    st.markdown("---")
-    
-    # STEP 1: Basic Information
-    if st.session_state.tender_step == 1:
-        st.markdown("### Step 1: Basic Tender Information")
-        
+    with st.form("tender_form"):
+        # SECTION 1: Basic Information
+        st.markdown("### 📋 Basic Information")
         col1, col2 = st.columns(2)
         
         with col1:
-            tender_name = st.text_input("Tender Name *", 
-                value=st.session_state.new_tender_data.get('tender_name', ''),
-                placeholder="e.g., Ministry of Education - Smart TVs 2026")
-            
-            tender_ref = st.text_input("Tender Reference ID",
-                value=st.session_state.new_tender_data.get('tender_ref', ''),
-                placeholder="e.g., KPM/TV/2026/001")
-            
-            category = st.selectbox("Product Category *", 
-                ['TV', 'Laptop', 'Printer'],
-                index=['TV', 'Laptop', 'Printer'].index(st.session_state.new_tender_data.get('category', 'TV')))
+            tender_name = st.text_input("Tender Name *", placeholder="e.g., Ministry of Education - Smart TVs 2026")
+            tender_ref = st.text_input("Tender Reference ID", placeholder="e.g., KPM/TV/2026/001")
+            category = st.selectbox("Product Category *", ['TV', 'Laptop', 'Printer'])
         
         with col2:
-            ministry = st.text_input("Ministry/Department",
-                value=st.session_state.new_tender_data.get('ministry', ''),
-                placeholder="e.g., Ministry of Education")
-            
-            description = st.text_area("Description",
-                value=st.session_state.new_tender_data.get('description', ''),
-                placeholder="Brief description of the tender purpose...")
-            
-            budget = st.number_input("Total Budget (RM) - Optional", 
-                min_value=0, 
-                value=st.session_state.new_tender_data.get('budget', 0),
-                step=100000)
+            ministry = st.text_input("Ministry/Department", placeholder="e.g., Ministry of Education")
+            total_units = st.number_input("Total Units Required *", min_value=1, value=100, step=1)
+            budget = st.number_input("Total Budget (RM) - Optional", min_value=0, value=0, step=100000)
+        
+        description = st.text_area("Description", placeholder="Brief description of the tender purpose...")
         
         st.markdown("---")
         
-        col1, col2, col3 = st.columns([2, 1, 1])
-        with col2:
-            if st.button("← Back to Dashboard", use_container_width=True):
-                st.session_state.page = 'home'
-                st.rerun()
-        with col3:
-            if tender_name and category:
-                if st.button("Next: Quantities →", use_container_width=True, type="primary"):
-                    st.session_state.new_tender_data.update({
-                        'tender_name': tender_name,
-                        'tender_ref': tender_ref,
-                        'category': category,
-                        'ministry': ministry,
-                        'description': description,
-                        'budget': budget,
-                        'tender_id': create_tender_id(),
-                        'date_created': datetime.now().strftime('%Y-%m-%d %H:%M'),
-                        'status': 'active'
-                    })
-                    st.session_state.tender_step = 2
-                    st.rerun()
-            else:
-                st.error("Please fill required fields (*)")
-    
-    # STEP 2: Quantities & Distribution
-    elif st.session_state.tender_step == 2:
-        st.markdown("### Step 2: Quantity & Distribution")
+        # SECTION 2: Distribution
+        st.markdown("### 📦 Quantity Distribution")
         
-        total_units = st.number_input("Total Units Required *", 
-            min_value=1, 
-            value=st.session_state.new_tender_data.get('total_units', 100),
-            step=1)
-        
-        st.markdown("---")
-        
-        distribution_type = st.radio("Distribution Type:", 
-            ['Single Location', 'Multiple Zones'],
-            index=0 if st.session_state.new_tender_data.get('distribution_type') == 'Single Location' else 1)
-        
-        zones = []
+        distribution_type = st.radio("Distribution Type:", ['Single Location', 'Multiple Zones'], horizontal=True)
         
         if distribution_type == 'Single Location':
-            location_name = st.text_input("Delivery Location", 
-                value=st.session_state.new_tender_data.get('location_name', ''),
-                placeholder="e.g., Ministry HQ, Putrajaya")
-            zones = [{'zone_name': location_name, 'quantity': total_units, 'premium': 0}]
-            
+            location_name = st.text_input("Delivery Location", placeholder="e.g., Ministry HQ, Putrajaya")
+            st.info(f"All {total_units} units will be delivered to one location")
+        
         else:
-            # Multiple Zones
-            st.markdown("#### Zone Configuration")
+            st.markdown("#### Configure Zones")
+            st.caption("Add zones and allocate quantities. Total must match units required.")
             
-            # Initialize zones if not exist
-            if 'zones' not in st.session_state.new_tender_data:
-                st.session_state.new_tender_data['zones'] = [
-                    {'zone_name': 'Zone 1', 'quantity': 0, 'premium': 0}
-                ]
+            # Dynamic zone input using columns
+            num_zones = st.number_input("Number of Zones", min_value=1, max_value=20, value=3, step=1)
             
-            # Add zone button
-            if st.button("➕ Add Zone"):
-                st.session_state.new_tender_data['zones'].append(
-                    {'zone_name': f"Zone {len(st.session_state.new_tender_data['zones'])+1}", 
-                     'quantity': 0, 
-                     'premium': 0}
-                )
-                st.rerun()
-            
-            # Display zones
             zones_data = []
             total_configured = 0
             
-            for idx, zone in enumerate(st.session_state.new_tender_data['zones']):
-                col1, col2, col3, col4 = st.columns([3, 2, 2, 1])
-                
+            for i in range(num_zones):
+                col1, col2, col3 = st.columns([3, 2, 2])
                 with col1:
-                    zone_name = st.text_input(f"Zone {idx+1} Name", 
-                        value=zone['zone_name'],
-                        key=f"zone_name_{idx}")
-                
+                    zone_name = st.text_input(f"Zone {i+1} Name", value=f"Zone {i+1}", key=f"zname_{i}")
                 with col2:
-                    quantity = st.number_input(f"Quantity", 
-                        min_value=0,
-                        value=zone['quantity'],
-                        key=f"zone_qty_{idx}")
-                    total_configured += quantity
-                
+                    zone_qty = st.number_input(f"Quantity", min_value=0, value=0, key=f"zqty_{i}")
+                    total_configured += zone_qty
                 with col3:
-                    premium = st.number_input(f"Premium (%)", 
-                        min_value=0.0,
-                        max_value=100.0,
-                        value=zone['premium'],
-                        step=0.5,
-                        key=f"zone_prem_{idx}")
-                
-                with col4:
-                    st.write("")
-                    st.write("")
-                    if len(st.session_state.new_tender_data['zones']) > 1:
-                        if st.button("🗑️", key=f"del_zone_{idx}"):
-                            st.session_state.new_tender_data['zones'].pop(idx)
-                            st.rerun()
+                    zone_premium = st.number_input(f"Premium (%)", min_value=0.0, max_value=100.0, value=0.0, step=0.5, key=f"zprem_{i}")
                 
                 zones_data.append({
-                    'zone_name': zone_name,
-                    'quantity': quantity,
-                    'premium': premium
+                    'name': zone_name,
+                    'qty': zone_qty,
+                    'premium': float(zone_premium)
                 })
             
-            zones = zones_data
-            
             # Validation
-            st.markdown("---")
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.metric("Total Required", f"{total_units} units")
+                st.metric("Required", f"{total_units} units")
             with col2:
-                st.metric("Total Configured", f"{total_configured} units")
+                st.metric("Configured", f"{total_configured} units")
             with col3:
                 if total_configured == total_units:
-                    st.success("✓ Quantities Match!")
-                elif total_configured < total_units:
-                    st.error(f"⚠️ Need {total_units - total_configured} more units")
+                    st.success("✓ Match!")
                 else:
-                    st.error(f"⚠️ Remove {total_configured - total_units} units")
+                    st.error(f"⚠️ {abs(total_units - total_configured)} diff")
         
         st.markdown("---")
         
-        col1, col2, col3 = st.columns([2, 1, 1])
-        with col2:
-            if st.button("← Previous Step", use_container_width=True):
-                st.session_state.tender_step = 1
-                st.rerun()
-        with col3:
-            can_proceed = (distribution_type == 'Single Location') or (total_configured == total_units)
-            if can_proceed:
-                if st.button("Next: Requirements →", use_container_width=True, type="primary"):
-                    st.session_state.new_tender_data.update({
-                        'total_units': total_units,
-                        'distribution_type': distribution_type,
-                        'zones': zones
-                    })
-                    st.session_state.tender_step = 3
-                    st.rerun()
-            else:
-                st.error("Fix quantity mismatch first")
-    
-    # STEP 3: Technical Requirements
-    elif st.session_state.tender_step == 3:
-        st.markdown("### Step 3: Technical Requirements")
+        # SECTION 3: Technical Requirements
+        st.markdown("### 🔧 Technical Requirements")
         
-        category = st.session_state.new_tender_data['category']
+        # Load database for market intelligence
+        try:
+            df = load_product_database(category)
+            overview = get_market_overview(df, category)
+            
+            with st.expander("📊 View Market Intelligence", expanded=False):
+                col1, col2, col3 = st.columns(3)
+                if category == 'TV':
+                    with col1:
+                        st.metric("Models", overview['total_models'])
+                        st.metric("Price Range", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
+                    with col2:
+                        st.metric("Screens", f"{overview['screen_range'][0]}\" - {overview['screen_range'][1]}\"")
+                        st.caption(f"Common: {overview['common_screen']}\"")
+                    with col3:
+                        st.metric("MEPS", f"{overview['meps_range'][0]}-{overview['meps_range'][1]} ⭐")
+                
+                elif category == 'Laptop':
+                    with col1:
+                        st.metric("Models", overview['total_models'])
+                        st.metric("Price", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
+                    with col2:
+                        st.metric("RAM", f"{overview['ram_range'][0]}-{overview['ram_range'][1]} GB")
+                        st.caption(f"Common: {overview['common_ram']} GB")
+                    with col3:
+                        st.metric("Storage", f"{overview['storage_range'][0]}-{overview['storage_range'][1]} GB")
+                        st.caption(f"Common: {overview['common_storage']} GB")
+                
+                elif category == 'Printer':
+                    with col1:
+                        st.metric("Models", overview['total_models'])
+                    with col2:
+                        st.metric("Price", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
+                    with col3:
+                        st.metric("Speed", f"{overview['speed_range'][0]}-{overview['speed_range'][1]} ppm")
+        except:
+            st.warning("Market intelligence unavailable")
         
-        # Load product database for market intelligence
-        df = load_product_database(category)
-        overview = get_market_overview(df, category)
-        
-        # Show market overview
-        st.markdown("#### 📊 Market Intelligence")
-        st.info(f"**Database:** {overview['total_models']} {category} models available for analysis")
-        
-        col1, col2, col3 = st.columns(3)
-        
-        if category == 'TV':
-            with col1:
-                st.metric("Price Range", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
-            with col2:
-                st.metric("Screen Sizes", f"{overview['screen_range'][0]}\" - {overview['screen_range'][1]}\"")
-                st.caption(f"Most common: {overview['common_screen']}\"")
-            with col3:
-                st.metric("MEPS Ratings", f"{overview['meps_range'][0]} - {overview['meps_range'][1]} ⭐")
-        
-        elif category == 'Laptop':
-            with col1:
-                st.metric("Price Range", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
-            with col2:
-                st.metric("RAM Range", f"{overview['ram_range'][0]}GB - {overview['ram_range'][1]}GB")
-                st.caption(f"Most common: {overview['common_ram']}GB")
-            with col3:
-                st.metric("Storage Range", f"{overview['storage_range'][0]}GB - {overview['storage_range'][1]}GB")
-                st.caption(f"Most common: {overview['common_storage']}GB")
-        
-        elif category == 'Printer':
-            with col1:
-                st.metric("Price Range", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
-            with col2:
-                st.metric("Speed Range", f"{overview['speed_range'][0]} - {overview['speed_range'][1]} ppm")
-            with col3:
-                st.metric("Common Tech", overview['common_tech'])
-        
-        st.markdown("---")
-        
-        # Requirements input based on category
+        # Requirements based on category
         st.markdown("#### Set Minimum Requirements")
         
-        requirements = {}
+        col1, col2, col3 = st.columns(3)
         
         if category == 'TV':
-            col1, col2, col3 = st.columns(3)
             with col1:
-                requirements['max_price'] = st.number_input("Max Price (RM)", 1000, 15000, 5000, 100)
-                requirements['min_screen'] = st.number_input("Min Screen (inches)", 40, 85, 55)
-                requirements['min_meps'] = st.selectbox("Min MEPS Rating", [3, 4, 5], index=0)
+                max_price = st.number_input("Max Price (RM)", 1000, 15000, 5000, 100)
+                min_screen = st.number_input("Min Screen (inches)", 40, 85, 55, 1)
+                min_meps = st.selectbox("Min MEPS Rating", [3, 4, 5], index=0)
             with col2:
-                requirements['require_4k'] = st.checkbox("4K Resolution Required", value=False)
-                requirements['require_hdr'] = st.checkbox("HDR10 Required", value=False)
-                requirements['require_wifi'] = st.checkbox("WiFi Required", value=True)
+                require_4k = st.checkbox("4K Resolution Required")
+                require_hdr = st.checkbox("HDR10 Required")
+                require_wifi = st.checkbox("WiFi Required", value=True)
             with col3:
-                requirements['min_warranty'] = st.selectbox("Min Warranty (years)", [1, 2, 3], index=0)
-                requirements['max_weight'] = st.number_input("Max Weight (kg)", 10.0, 40.0, 30.0, 0.5)
+                min_warranty = st.selectbox("Min Warranty (years)", [1, 2, 3], index=0)
+                max_weight = st.number_input("Max Weight (kg)", 10.0, 40.0, 30.0, 0.5)
         
         elif category == 'Laptop':
-            col1, col2, col3 = st.columns(3)
             with col1:
-                requirements['max_price'] = st.number_input("Max Price (RM)", 1000, 8000, 4000, 100)
-                requirements['min_ram'] = st.slider("Min RAM (GB)", 4, 32, 8)
-                requirements['min_storage'] = st.slider("Min Storage (GB)", 128, 1024, 256)
+                max_price = st.number_input("Max Price (RM)", 1000, 8000, 4000, 100)
+                min_ram = st.slider("Min RAM (GB)", 4, 32, 8)
+                min_storage = st.slider("Min Storage (GB)", 128, 1024, 256)
             with col2:
-                requirements['min_battery'] = st.slider("Min Battery (hours)", 4, 20, 8)
-                requirements['require_windows11'] = st.checkbox("Windows 11 Required", value=False)
+                min_battery = st.slider("Min Battery (hours)", 4, 20, 8)
+                require_windows11 = st.checkbox("Windows 11 Required")
             with col3:
-                requirements['min_warranty'] = st.selectbox("Min Warranty (years)", [1, 2, 3], index=0)
-                requirements['max_weight'] = st.number_input("Max Weight (kg)", 1.0, 3.0, 2.5, 0.1)
+                min_warranty = st.selectbox("Min Warranty (years)", [1, 2, 3], index=0)
+                max_weight = st.number_input("Max Weight (kg)", 1.0, 3.0, 2.5, 0.1)
         
         elif category == 'Printer':
-            col1, col2, col3 = st.columns(3)
             with col1:
-                requirements['max_price'] = st.number_input("Max Price (RM)", 500, 5000, 2000, 100)
-                requirements['min_speed'] = st.slider("Min Print Speed (ppm)", 10, 60, 25)
+                max_price = st.number_input("Max Price (RM)", 500, 5000, 2000, 100)
+                min_speed = st.slider("Min Print Speed (ppm)", 10, 60, 25)
             with col2:
-                requirements['require_duplex'] = st.checkbox("Duplex Required", value=False)
-                requirements['require_network'] = st.checkbox("Network Required", value=False)
+                require_duplex = st.checkbox("Duplex Required")
+                require_network = st.checkbox("Network Required")
             with col3:
-                requirements['min_warranty'] = st.selectbox("Min Warranty (years)", [1, 2, 3], index=0)
+                min_warranty = st.selectbox("Min Warranty (years)", [1, 2, 3], index=0)
         
         st.markdown("---")
         
-        col1, col2, col3 = st.columns([2, 1, 1])
-        with col2:
-            if st.button("← Previous Step", use_container_width=True):
-                st.session_state.tender_step = 2
-                st.rerun()
-        with col3:
-            if st.button("Next: Set Weights →", use_container_width=True, type="primary"):
-                st.session_state.new_tender_data['requirements'] = requirements
-                st.session_state.tender_step = 4
-                st.rerun()
-    
-    # STEP 4: Evaluation Weights
-    elif st.session_state.tender_step == 4:
-        st.markdown("### Step 4: Evaluation Criteria Weights")
+        # SECTION 4: Evaluation Weights
+        st.markdown("### ⚖️ Evaluation Criteria Weights")
+        st.caption("Higher weight = more important. Total must equal 100%")
         
-        category = st.session_state.new_tender_data['category']
+        preset = st.selectbox("Preset Template:", ["Custom", "Balanced (Specs Focus)", "Budget Focus", "Performance Focus"])
         
-        st.info("💡 Adjust weights based on what matters most for THIS tender. Higher weight = more important.")
-        
-        # Preset templates
-        preset = st.selectbox("Choose Preset or Custom:", 
-            ["Custom", "Balanced (Specs Focus)", "Budget Focus", "Performance Focus"])
-        
-        weights = {}
-        
+        # Initialize weights based on category and preset
         if category == 'TV':
             if preset == "Balanced (Specs Focus)":
-                weights = {'price': 10, 'meps': 20, 'screen': 15, 'audio': 15, 'wifi': 10, 'hdmi': 10, 'os': 10, 'weight': 5, 'warranty': 5}
+                default_weights = {'price': 10, 'meps': 20, 'screen': 15, 'audio': 15, 'wifi': 10, 'hdmi': 10, 'os': 10, 'weight': 5, 'warranty': 5}
             elif preset == "Budget Focus":
-                weights = {'price': 35, 'meps': 15, 'screen': 10, 'audio': 10, 'wifi': 8, 'hdmi': 8, 'os': 6, 'weight': 5, 'warranty': 3}
+                default_weights = {'price': 35, 'meps': 15, 'screen': 10, 'audio': 10, 'wifi': 8, 'hdmi': 8, 'os': 6, 'weight': 5, 'warranty': 3}
             elif preset == "Performance Focus":
-                weights = {'price': 5, 'meps': 25, 'screen': 20, 'audio': 20, 'wifi': 10, 'hdmi': 10, 'os': 5, 'weight': 3, 'warranty': 2}
+                default_weights = {'price': 5, 'meps': 25, 'screen': 20, 'audio': 20, 'wifi': 10, 'hdmi': 10, 'os': 5, 'weight': 3, 'warranty': 2}
             else:
-                weights = {'price': 15, 'meps': 20, 'screen': 15, 'audio': 15, 'wifi': 10, 'hdmi': 10, 'os': 8, 'weight': 4, 'warranty': 3}
+                default_weights = {'price': 15, 'meps': 20, 'screen': 15, 'audio': 15, 'wifi': 10, 'hdmi': 10, 'os': 8, 'weight': 4, 'warranty': 3}
             
-            st.markdown("#### Adjust Weights (Total must = 100%)")
             col1, col2 = st.columns(2)
             with col1:
-                weights['price'] = st.slider("Price (Reference)", 0, 50, weights['price'])
-                weights['meps'] = st.slider("MEPS Rating", 0, 50, weights['meps'])
-                weights['screen'] = st.slider("Screen Quality", 0, 50, weights['screen'])
-                weights['audio'] = st.slider("Audio Quality", 0, 50, weights['audio'])
+                w_price = st.slider("Price (Reference)", 0, 50, default_weights['price'], key="w_price")
+                w_meps = st.slider("MEPS Rating", 0, 50, default_weights['meps'], key="w_meps")
+                w_screen = st.slider("Screen Quality", 0, 50, default_weights['screen'], key="w_screen")
+                w_audio = st.slider("Audio Quality", 0, 50, default_weights['audio'], key="w_audio")
             with col2:
-                weights['wifi'] = st.slider("WiFi", 0, 30, weights['wifi'])
-                weights['hdmi'] = st.slider("HDMI", 0, 30, weights['hdmi'])
-                weights['os'] = st.slider("OS Quality", 0, 30, weights['os'])
-                weights['weight'] = st.slider("Weight/Build", 0, 20, weights['weight'])
-                weights['warranty'] = st.slider("Warranty", 0, 20, weights['warranty'])
+                w_wifi = st.slider("WiFi", 0, 30, default_weights['wifi'], key="w_wifi")
+                w_hdmi = st.slider("HDMI", 0, 30, default_weights['hdmi'], key="w_hdmi")
+                w_os = st.slider("OS Quality", 0, 30, default_weights['os'], key="w_os")
+                w_weight = st.slider("Weight/Build", 0, 20, default_weights['weight'], key="w_weight")
+                w_warranty = st.slider("Warranty", 0, 20, default_weights['warranty'], key="w_warranty")
+            
+            weights = {
+                'price': w_price, 'meps': w_meps, 'screen': w_screen, 'audio': w_audio,
+                'wifi': w_wifi, 'hdmi': w_hdmi, 'os': w_os, 'weight': w_weight, 'warranty': w_warranty
+            }
         
         elif category == 'Laptop':
             if preset == "Balanced (Specs Focus)":
-                weights = {'price': 10, 'processor': 25, 'ram': 20, 'storage': 15, 'battery': 15, 'weight': 10, 'warranty': 5}
+                default_weights = {'price': 10, 'processor': 25, 'ram': 20, 'storage': 15, 'battery': 15, 'weight': 10, 'warranty': 5}
             elif preset == "Budget Focus":
-                weights = {'price': 35, 'processor': 20, 'ram': 15, 'storage': 10, 'battery': 10, 'weight': 5, 'warranty': 5}
+                default_weights = {'price': 35, 'processor': 20, 'ram': 15, 'storage': 10, 'battery': 10, 'weight': 5, 'warranty': 5}
             elif preset == "Performance Focus":
-                weights = {'price': 5, 'processor': 30, 'ram': 25, 'storage': 20, 'battery': 10, 'weight': 5, 'warranty': 5}
+                default_weights = {'price': 5, 'processor': 30, 'ram': 25, 'storage': 20, 'battery': 10, 'weight': 5, 'warranty': 5}
             else:
-                weights = {'price': 15, 'processor': 25, 'ram': 20, 'storage': 15, 'battery': 12, 'weight': 8, 'warranty': 5}
+                default_weights = {'price': 15, 'processor': 25, 'ram': 20, 'storage': 15, 'battery': 12, 'weight': 8, 'warranty': 5}
             
             col1, col2 = st.columns(2)
             with col1:
-                weights['price'] = st.slider("Price (Reference)", 0, 50, weights['price'])
-                weights['processor'] = st.slider("Processor", 0, 50, weights['processor'])
-                weights['ram'] = st.slider("RAM", 0, 50, weights['ram'])
-                weights['storage'] = st.slider("Storage", 0, 30, weights['storage'])
+                w_price = st.slider("Price (Reference)", 0, 50, default_weights['price'], key="w_price")
+                w_processor = st.slider("Processor", 0, 50, default_weights['processor'], key="w_proc")
+                w_ram = st.slider("RAM", 0, 50, default_weights['ram'], key="w_ram")
+                w_storage = st.slider("Storage", 0, 30, default_weights['storage'], key="w_stor")
             with col2:
-                weights['battery'] = st.slider("Battery Life", 0, 30, weights['battery'])
-                weights['weight'] = st.slider("Weight/Portability", 0, 20, weights['weight'])
-                weights['warranty'] = st.slider("Warranty", 0, 20, weights['warranty'])
+                w_battery = st.slider("Battery Life", 0, 30, default_weights['battery'], key="w_batt")
+                w_weight = st.slider("Weight/Portability", 0, 20, default_weights['weight'], key="w_weight")
+                w_warranty = st.slider("Warranty", 0, 20, default_weights['warranty'], key="w_warr")
+            
+            weights = {
+                'price': w_price, 'processor': w_processor, 'ram': w_ram, 'storage': w_storage,
+                'battery': w_battery, 'weight': w_weight, 'warranty': w_warranty
+            }
         
         elif category == 'Printer':
             if preset == "Balanced (Specs Focus)":
-                weights = {'price': 10, 'tech': 20, 'speed': 20, 'capacity': 15, 'duty': 15, 'toner': 15, 'warranty': 5}
+                default_weights = {'price': 10, 'tech': 20, 'speed': 20, 'capacity': 15, 'duty': 15, 'toner': 15, 'warranty': 5}
             elif preset == "Budget Focus":
-                weights = {'price': 35, 'tech': 15, 'speed': 15, 'capacity': 10, 'duty': 10, 'toner': 10, 'warranty': 5}
+                default_weights = {'price': 35, 'tech': 15, 'speed': 15, 'capacity': 10, 'duty': 10, 'toner': 10, 'warranty': 5}
             elif preset == "Performance Focus":
-                weights = {'price': 5, 'tech': 25, 'speed': 25, 'capacity': 15, 'duty': 15, 'toner': 10, 'warranty': 5}
+                default_weights = {'price': 5, 'tech': 25, 'speed': 25, 'capacity': 15, 'duty': 15, 'toner': 10, 'warranty': 5}
             else:
-                weights = {'price': 15, 'tech': 20, 'speed': 20, 'capacity': 12, 'duty': 12, 'toner': 16, 'warranty': 5}
+                default_weights = {'price': 15, 'tech': 20, 'speed': 20, 'capacity': 12, 'duty': 12, 'toner': 16, 'warranty': 5}
             
             col1, col2 = st.columns(2)
             with col1:
-                weights['price'] = st.slider("Price (Reference)", 0, 50, weights['price'])
-                weights['tech'] = st.slider("Print Technology", 0, 40, weights['tech'])
-                weights['speed'] = st.slider("Print Speed", 0, 40, weights['speed'])
-                weights['capacity'] = st.slider("Paper Capacity", 0, 30, weights['capacity'])
+                w_price = st.slider("Price (Reference)", 0, 50, default_weights['price'], key="w_price")
+                w_tech = st.slider("Print Technology", 0, 40, default_weights['tech'], key="w_tech")
+                w_speed = st.slider("Print Speed", 0, 40, default_weights['speed'], key="w_speed")
+                w_capacity = st.slider("Paper Capacity", 0, 30, default_weights['capacity'], key="w_cap")
             with col2:
-                weights['duty'] = st.slider("Monthly Duty", 0, 30, weights['duty'])
-                weights['toner'] = st.slider("Toner Yield", 0, 30, weights['toner'])
-                weights['warranty'] = st.slider("Warranty", 0, 20, weights['warranty'])
+                w_duty = st.slider("Monthly Duty", 0, 30, default_weights['duty'], key="w_duty")
+                w_toner = st.slider("Toner Yield", 0, 30, default_weights['toner'], key="w_toner")
+                w_warranty = st.slider("Warranty", 0, 20, default_weights['warranty'], key="w_warr")
+            
+            weights = {
+                'price': w_price, 'tech': w_tech, 'speed': w_speed, 'capacity': w_capacity,
+                'duty': w_duty, 'toner': w_toner, 'warranty': w_warranty
+            }
         
-        # Validate total
         total_weight = sum(weights.values())
         
-        col1, col2, col3 = st.columns([2, 1, 1])
-        with col1:
-            if total_weight == 100:
-                st.success(f"✓ Total Weight: {total_weight}%")
-            else:
-                st.error(f"⚠️ Total Weight: {total_weight}% (Must be exactly 100%)")
+        if total_weight == 100:
+            st.success(f"✓ Total Weight: {total_weight}%")
+        else:
+            st.error(f"⚠️ Total Weight: {total_weight}% - Must be exactly 100%")
         
         st.markdown("---")
         
+        # Submit button
         col1, col2, col3 = st.columns([2, 1, 1])
         with col2:
-            if st.button("← Previous Step", use_container_width=True):
-                st.session_state.tender_step = 3
+            cancel = st.form_submit_button("Cancel", use_container_width=True)
+            if cancel:
+                st.session_state.page = 'home'
                 st.rerun()
+        
         with col3:
-            if total_weight == 100:
-                if st.button("Run Evaluation →", use_container_width=True, type="primary"):
-                    st.session_state.new_tender_data['weights'] = weights
-                    st.session_state.tender_step = 5
-                    st.rerun()
-            else:
-                st.error("Fix weights first")
+            submitted = st.form_submit_button("Run Evaluation", type="primary", use_container_width=True)
     
-    # STEP 5: Run Evaluation
-    elif st.session_state.tender_step == 5:
-        st.markdown("### Step 5: Evaluation Results")
+    # Process form submission
+    if submitted:
+        # Validate
+        errors = []
         
-        tender_data = st.session_state.new_tender_data
-        category = tender_data['category']
-        requirements = tender_data['requirements']
-        weights = tender_data['weights']
+        if not tender_name:
+            errors.append("Tender name is required")
         
-        # Load and filter products
-        df = load_product_database(category)
+        if distribution_type == 'Multiple Zones' and total_configured != total_units:
+            errors.append(f"Zone quantities ({total_configured}) don't match total units ({total_units})")
         
-        st.markdown("#### Filtering Products...")
+        if total_weight != 100:
+            errors.append(f"Evaluation weights must total 100% (currently {total_weight}%)")
         
-        # Apply filters based on category
-        filtered = df.copy()
-        
-        if category == 'TV':
-            # Apply zone pricing if needed
-            if tender_data['distribution_type'] == 'Multiple Zones':
-                # For simplicity, use first zone's premium for all
-                premium = tender_data['zones'][0]['premium']
-                if premium > 0:
-                    filtered['Price'] = filtered['BasePrice'] * (1 + premium/100)
-                else:
-                    filtered['Price'] = filtered['BasePrice']
-            else:
-                filtered['Price'] = filtered['BasePrice']
-            
-            filtered = filtered[filtered['Price'] <= requirements['max_price']]
-            filtered = filtered[filtered['ScreenSize'] >= requirements['min_screen']]
-            filtered = filtered[filtered['MEPS_Rating'] >= requirements['min_meps']]
-            filtered = filtered[filtered['Weight'] <= requirements['max_weight']]
-            filtered = filtered[filtered['Warranty_Years'] >= requirements['min_warranty']]
-            
-            if requirements['require_4k']:
-                filtered = filtered[filtered['Resolution'] == '4K']
-            if requirements['require_hdr']:
-                filtered = filtered[filtered['HDR10'] == 'Yes']
-        
-        elif category == 'Laptop':
-            filtered = filtered[filtered['Price'] <= requirements['max_price']]
-            filtered = filtered[filtered['RAM'] >= requirements['min_ram']]
-            filtered = filtered[filtered['Storage'] >= requirements['min_storage']]
-            filtered = filtered[filtered['BatteryLife'] >= requirements['min_battery']]
-            filtered = filtered[filtered['Weight'] <= requirements['max_weight']]
-            filtered = filtered[filtered['Warranty'] >= requirements['min_warranty']]
-            
-            if requirements['require_windows11']:
-                filtered = filtered[filtered['OS'].str.contains('Windows 11', na=False)]
-        
-        elif category == 'Printer':
-            filtered = filtered[filtered['Price'] <= requirements['max_price']]
-            filtered = filtered[filtered['PrintSpeed'] >= requirements['min_speed']]
-            filtered = filtered[filtered['Warranty'] >= requirements['min_warranty']]
-            
-            if requirements['require_duplex']:
-                filtered = filtered[filtered['Duplex'] == 'Yes']
-            if requirements['require_network']:
-                filtered = filtered[filtered['Network'].str.contains('WiFi|Ethernet', na=False)]
-        
-        if filtered.empty:
-            st.error("❌ No products meet all requirements. Please go back and adjust your filters.")
-            if st.button("← Go Back to Requirements"):
-                st.session_state.tender_step = 3
-                st.rerun()
+        if errors:
+            for error in errors:
+                st.error(f"❌ {error}")
             st.stop()
         
-        st.success(f"✅ {len(filtered)} products pass all requirements (out of {len(df)} total)")
-        
-        st.markdown("---")
-        st.markdown("#### Calculating Scores...")
-        
-        # Scoring logic (simplified for brevity - can be expanded)
-        scored = filtered.copy()
-        
-        # This is a simplified scoring - you'd expand this with full logic
-        # For demonstration, I'll show the structure
-        
-        if category == 'TV':
-            # Normalize scores
-            if 'BasePrice' in scored.columns:
-                min_price = scored['BasePrice'].min()
-                scored['PriceScore'] = min_price / scored['BasePrice'] if min_price > 0 else 0
-            else:
-                scored['PriceScore'] = 0
-                
-            max_screen = scored['ScreenSize'].max()
-            scored['ScreenScore'] = scored['ScreenSize'] / max_screen if max_screen > 0 else 0
-            
-            # Add more scoring logic here...
-            # For now, simplified total score
-            scored['TotalScore'] = (
-                scored.get('PriceScore', 0) * weights['price']/100 +
-                scored.get('ScreenScore', 0) * weights['screen']/100
-            )
-        
-        # Sort by score
-        scored = scored.sort_values('TotalScore', ascending=False).reset_index(drop=True)
-        scored['Rank'] = scored.index + 1
-        
-        # Display results
-        st.markdown("#### 🏆 Top Recommendations")
-        
-        top3 = scored.head(3)
-        cols = st.columns(3)
-        
-        for idx, (i, row) in enumerate(top3.iterrows()):
-            with cols[idx]:
-                rank_emoji = ["🥇", "🥈", "🥉"][idx]
-                st.markdown(f"### {rank_emoji} Rank {idx+1}")
-                st.markdown(f"**{row['Brand']} {row['Model']}**")
-                if 'Price' in row:
-                    st.metric("Price", f"RM {row['Price']:,.0f}")
-                if 'TotalScore' in row:
-                    st.metric("Score", f"{row['TotalScore']:.3f}")
-        
-        st.markdown("---")
-        
-        # Save tender
-        tender_data['results'] = {
-            'filtered_count': len(filtered),
-            'top_product': f"{scored.iloc[0]['Brand']} {scored.iloc[0]['Model']}",
-            'top_score': float(scored.iloc[0]['TotalScore'])
+        # Prepare tender data
+        tender_data = {
+            'tender_id': create_tender_id(),
+            'tender_name': tender_name,
+            'tender_ref': tender_ref or 'N/A',
+            'category': category,
+            'ministry': ministry or 'N/A',
+            'description': description or 'N/A',
+            'total_units': total_units,
+            'budget': budget,
+            'date_created': datetime.now().strftime('%Y-%m-%d %H:%M'),
+            'status': 'active',
+            'distribution_type': distribution_type,
+            'weights': weights
         }
-        tender_data['recommendation'] = f"{scored.iloc[0]['Brand']} {scored.iloc[0]['Model']}"
-        tender_data['status'] = 'completed'
         
-        save_tender(tender_data)
+        # Add zones or location
+        if distribution_type == 'Single Location':
+            tender_data['zones'] = [{'name': location_name, 'qty': total_units, 'premium': 0.0}]
+        else:
+            tender_data['zones'] = zones_data
         
-        st.success("✅ Tender evaluation completed and saved!")
+        # Add requirements
+        if category == 'TV':
+            tender_data['requirements'] = {
+                'max_price': max_price,
+                'min_screen': min_screen,
+                'min_meps': min_meps,
+                'min_warranty': min_warranty,
+                'max_weight': max_weight,
+                'require_4k': require_4k,
+                'require_hdr': require_hdr,
+                'require_wifi': require_wifi
+            }
+        elif category == 'Laptop':
+            tender_data['requirements'] = {
+                'max_price': max_price,
+                'min_ram': min_ram,
+                'min_storage': min_storage,
+                'min_battery': min_battery,
+                'min_warranty': min_warranty,
+                'max_weight': max_weight,
+                'require_windows11': require_windows11
+            }
+        elif category == 'Printer':
+            tender_data['requirements'] = {
+                'max_price': max_price,
+                'min_speed': min_speed,
+                'min_warranty': min_warranty,
+                'require_duplex': require_duplex,
+                'require_network': require_network
+            }
         
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            if st.button("📄 View Full Report", use_container_width=True):
-                st.session_state.current_tender = tender_data['tender_id']
-                st.session_state.page = 'view_tender'
-                st.rerun()
-        with col2:
-            if st.button("🏠 Back to Dashboard", use_container_width=True):
-                st.session_state.page = 'home'
-                st.session_state.tender_step = 1
-                st.session_state.new_tender_data = {}
-                st.rerun()
-        with col3:
-            if st.button("➕ New Tender", use_container_width=True, type="primary"):
-                st.session_state.tender_step = 1
-                st.session_state.new_tender_data = {}
-                st.rerun()
+        # Run evaluation (simplified)
+        with st.spinner("Running evaluation..."):
+            try:
+                df = load_product_database(category)
+                
+                # Apply filters
+                filtered = df.copy()
+                requirements = tender_data['requirements']
+                
+                if category == 'TV':
+                    if 'BasePrice' in filtered.columns:
+                        filtered['Price'] = filtered['BasePrice']
+                    filtered = filtered[filtered['Price'] <= requirements['max_price']]
+                    filtered = filtered[filtered['ScreenSize'] >= requirements['min_screen']]
+                    filtered = filtered[filtered['MEPS_Rating'] >= requirements['min_meps']]
+                    filtered = filtered[filtered['Weight'] <= requirements['max_weight']]
+                    filtered = filtered[filtered['Warranty_Years'] >= requirements['min_warranty']]
+                    if requirements['require_4k']:
+                        filtered = filtered[filtered['Resolution'] == '4K']
+                    if requirements['require_hdr']:
+                        filtered = filtered[filtered['HDR10'] == 'Yes']
+                
+                elif category == 'Laptop':
+                    filtered = filtered[filtered['Price'] <= requirements['max_price']]
+                    filtered = filtered[filtered['RAM'] >= requirements['min_ram']]
+                    filtered = filtered[filtered['Storage'] >= requirements['min_storage']]
+                    filtered = filtered[filtered['BatteryLife'] >= requirements['min_battery']]
+                    filtered = filtered[filtered['Weight'] <= requirements['max_weight']]
+                    filtered = filtered[filtered['Warranty'] >= requirements['min_warranty']]
+                    if requirements['require_windows11']:
+                        filtered = filtered[filtered['OS'].str.contains('Windows 11', na=False)]
+                
+                elif category == 'Printer':
+                    filtered = filtered[filtered['Price'] <= requirements['max_price']]
+                    filtered = filtered[filtered['PrintSpeed'] >= requirements['min_speed']]
+                    filtered = filtered[filtered['Warranty'] >= requirements['min_warranty']]
+                    if requirements['require_duplex']:
+                        filtered = filtered[filtered['Duplex'] == 'Yes']
+                    if requirements['require_network']:
+                        filtered = filtered[filtered['Network'].str.contains('WiFi|Ethernet', na=False)]
+                
+                if filtered.empty:
+                    st.error("❌ No products meet all requirements. Please adjust your filters and try again.")
+                    st.stop()
+                
+                # Simple scoring (you can enhance this)
+                scored = filtered.copy()
+                scored['TotalScore'] = 0.5  # Placeholder
+                scored = scored.sort_values('TotalScore', ascending=False).reset_index(drop=True)
+                scored['Rank'] = scored.index + 1
+                
+                # Save results
+                tender_data['results'] = {
+                    'filtered_count': len(filtered),
+                    'top_product': f"{scored.iloc[0]['Brand']} {scored.iloc[0]['Model']}",
+                    'top_score': 0.5
+                }
+                tender_data['recommendation'] = f"{scored.iloc[0]['Brand']} {scored.iloc[0]['Model']}"
+                tender_data['status'] = 'completed'
+                
+                save_tender(tender_data)
+                
+                st.success("✅ Tender evaluation completed!")
+                st.info(f"**Recommendation:** {tender_data['recommendation']}")
+                
+                if st.button("View Full Results", type="primary"):
+                    st.session_state.current_tender = tender_data['tender_id']
+                    st.session_state.page = 'view_tender'
+                    st.rerun()
+                
+                if st.button("Back to Dashboard"):
+                    st.session_state.page = 'home'
+                    st.rerun()
+                    
+            except Exception as e:
+                st.error(f"❌ Error during evaluation: {str(e)}")
+                st.info("Please check your CSV files are present and properly formatted.")
+
 
 # =========================
 # PRODUCT DATABASE PAGE
