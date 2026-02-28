@@ -14,7 +14,7 @@ def check_password():
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == "TenderKPM2026":  # ⚠️ CHANGE THIS PASSWORD!
+        if st.session_state["password"] == "TenderKPM2026":
             st.session_state["password_correct"] = True
             del st.session_state["password"]
         else:
@@ -368,11 +368,6 @@ if st.session_state.page == 'home':
 # =========================
 elif st.session_state.page == 'create':
     
-# =========================
-# CREATE NEW TENDER PAGE (SINGLE PAGE FORM)
-# =========================
-elif st.session_state.page == 'create':
-    
     st.title("➕ Create New Tender Evaluation")
     st.markdown("**Configure all tender requirements in one place**")
     st.markdown("---")
@@ -415,7 +410,6 @@ elif st.session_state.page == 'create':
             st.markdown("#### Configure Zones")
             st.caption("Add zones and allocate quantities. Total must match units required.")
             
-            # Dynamic zone input using columns
             num_zones = st.number_input("Number of Zones", min_value=1, max_value=20, value=3, step=1)
             
             zones_data = []
@@ -437,7 +431,6 @@ elif st.session_state.page == 'create':
                     'premium': float(zone_premium)
                 })
             
-            # Validation
             col1, col2, col3 = st.columns(3)
             with col1:
                 st.metric("Required", f"{total_units} units")
@@ -540,7 +533,6 @@ elif st.session_state.page == 'create':
         
         preset = st.selectbox("Preset Template:", ["Custom", "Balanced (Specs Focus)", "Budget Focus", "Performance Focus"])
         
-        # Initialize weights based on category and preset
         if category == 'TV':
             if preset == "Balanced (Specs Focus)":
                 default_weights = {'price': 10, 'meps': 20, 'screen': 15, 'audio': 15, 'wifi': 10, 'hdmi': 10, 'os': 10, 'weight': 5, 'warranty': 5}
@@ -630,16 +622,17 @@ elif st.session_state.page == 'create':
         
         st.markdown("---")
         
-        # Submit button
+        # Submit buttons
         col1, col2, col3 = st.columns([2, 1, 1])
         with col2:
             cancel = st.form_submit_button("Cancel", use_container_width=True)
-            if cancel:
-                st.session_state.page = 'home'
-                st.rerun()
-        
         with col3:
             submitted = st.form_submit_button("Run Evaluation", type="primary", use_container_width=True)
+    
+    # Handle cancel outside the form
+    if cancel:
+        st.session_state.page = 'home'
+        st.rerun()
     
     # Process form submission
     if submitted:
@@ -713,7 +706,7 @@ elif st.session_state.page == 'create':
                 'require_network': require_network
             }
         
-        # Run evaluation (simplified)
+        # Run evaluation
         with st.spinner("Running evaluation..."):
             try:
                 df = load_product_database(category)
@@ -758,7 +751,7 @@ elif st.session_state.page == 'create':
                     st.error("❌ No products meet all requirements. Please adjust your filters and try again.")
                     st.stop()
                 
-                # Simple scoring (you can enhance this)
+                # Simple scoring
                 scored = filtered.copy()
                 scored['TotalScore'] = 0.5  # Placeholder
                 scored = scored.sort_values('TotalScore', ascending=False).reset_index(drop=True)
@@ -803,35 +796,50 @@ elif st.session_state.page == 'database':
     
     category = st.selectbox("Select Category:", ['TV', 'Laptop', 'Printer'])
     
-    df = load_product_database(category)
-    overview = get_market_overview(df, category)
+    try:
+        df = load_product_database(category)
+        overview = get_market_overview(df, category)
+        
+        # Market Overview
+        st.markdown("### 📊 Market Overview")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Models", overview['total_models'])
+        with col2:
+            st.metric("Price Range", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
+        
+        if category == 'TV':
+            with col3:
+                st.metric("Screen Sizes", f"{overview['screen_range'][0]}\" - {overview['screen_range'][1]}\"")
+            with col4:
+                st.metric("MEPS Range", f"{overview['meps_range'][0]}-{overview['meps_range'][1]} ⭐")
+        elif category == 'Laptop':
+            with col3:
+                st.metric("RAM Range", f"{overview['ram_range'][0]}-{overview['ram_range'][1]} GB")
+            with col4:
+                st.metric("Battery Range", f"{overview['battery_range'][0]}-{overview['battery_range'][1]} hrs")
+        elif category == 'Printer':
+            with col3:
+                st.metric("Speed Range", f"{overview['speed_range'][0]}-{overview['speed_range'][1]} ppm")
+            with col4:
+                st.metric("Common Tech", overview['common_tech'])
+        
+        st.markdown("---")
+        
+        # Display data
+        st.markdown("### 📋 Product List")
+        st.dataframe(df, use_container_width=True, height=500)
+        
+        # Download option
+        csv = df.to_csv(index=False)
+        st.download_button(
+            label="📥 Download CSV",
+            data=csv,
+            file_name=f"{category.lower()}_database.csv",
+            mime="text/csv"
+        )
     
-    # Market Overview
-    st.markdown("### 📊 Market Overview")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Total Models", overview['total_models'])
-    with col2:
-        st.metric("Price Range", f"RM {overview['price_range'][0]:,.0f} - {overview['price_range'][1]:,.0f}")
-    
-    if category == 'TV':
-        with col3:
-            st.metric("Screen Sizes", f"{overview['screen_range'][0]}\" - {overview['screen_range'][1]}\"")
-        with col4:
-            st.metric("MEPS Range", f"{overview['meps_range'][0]}-{overview['meps_range'][1]} ⭐")
-    
-    st.markdown("---")
-    
-    # Display data
-    st.markdown("### 📋 Product List")
-    st.dataframe(df, use_container_width=True, height=500)
-    
-    # Download option
-    csv = df.to_csv(index=False)
-    st.download_button(
-        label="📥 Download CSV",
-        data=csv,
-        file_name=f"{category.lower()}_database.csv",
-        mime="text/csv"
-    )
+    except Exception as e:
+        st.error(f"❌ Could not load database: {str(e)}")
+        st.info("Please ensure the CSV files (tv_specs.csv, laptop_specs.csv, printer_specs.csv) are present.")
